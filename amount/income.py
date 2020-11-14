@@ -50,4 +50,3 @@ class Income(AbsAmount):
 
     def __repr__(self):
         return f'class Income (id: {self.uuid}, category:{self.category}, name:{self.name}, amount: {self.amount}, created: {self.created})'
-

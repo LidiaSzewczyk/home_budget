@@ -3,7 +3,6 @@ from datetime import datetime
 from amount.abs_amount import AbsAmount
 
 
-
 class Expense(AbsAmount):
 
     def __init__(self, name, category, amount, uuid):
