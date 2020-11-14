@@ -3,10 +3,11 @@ from datetime import datetime
 from amount.abs_amount import AbsAmount
 
 
+
 class Expense(AbsAmount):
 
     def __init__(self, name, category, amount, uuid):
-        self._uuid = uuid
+        self._uuid = next(uuid)
         self._amount = amount
         self._category = category
         self._name = name
@@ -50,7 +51,3 @@ class Expense(AbsAmount):
 
     def __repr__(self):
         return f'class Expense (id: {self.uuid}, category:{self.category}, name:{self.name}, amount: {self.amount}, created: {self.created})'
-
-
-
-

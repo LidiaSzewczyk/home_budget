@@ -6,7 +6,7 @@ from amount.abs_amount import AbsAmount
 class Income(AbsAmount):
 
     def __init__(self, name, category, amount, uuid):
-        self._uuid = uuid
+        self._uuid = next(uuid)
         self._amount = amount
         self._category = category
         self._name = name
