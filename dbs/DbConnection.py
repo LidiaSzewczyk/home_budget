@@ -1,0 +1,21 @@
+import os
+import sqlite3
+
+from dbs.db_validation import db_validation
+from singleton.singleton import Singleton
+
+
+class DbConnection(Singleton):
+
+    def __init__(self):
+        db_path = os.environ.get("DB_PATH")
+        db_name = os.environ.get('DB_NAME')
+        db_root = os.environ.get('ROOT_DIR')
+        db_path = os.path.join(db_root, db_path, db_name)
+
+        self._db = sqlite3.connect(db_path)
+        db_validation(self._db)
+
+    @property
+    def db(self):
+        return self._db

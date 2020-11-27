@@ -1,3 +1,5 @@
 .idea
 venv
-test.py
+./test.py
+./budget.db
+.ENV
