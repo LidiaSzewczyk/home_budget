@@ -1,11 +1,12 @@
 import math
+from datetime import datetime
 
 from commands.abs_command import AbsCommand
 from commands.users_commands import UsersCommands
 
 
-class UpdateExpense(AbsCommand):
-    name = 'Update expense'
+class Update(AbsCommand):
+    name = 'Update'
 
     def execute(self):
 
@@ -31,15 +32,13 @@ class UpdateExpense(AbsCommand):
             except IndexError:
                 print(f"Incorrect value, no {update_category}.")
             else:
-                update_content = user_command.update_content
-
-            if update_category == 1:
-                expense.category = update_content
-            elif update_category == 2:
-                expense.name = update_content
-            elif update_category == 3:
-                expense.amount = update_content
-            elif update_category == 4:
-                expense.created = update_content
+                if update_category == 1:
+                    expense.category = user_command.update_content
+                elif update_category == 2:
+                    expense.name = user_command.update_content
+                elif update_category == 3:
+                    expense.amount = user_command.update_content
+                elif update_category == 4:
+                    expense.created = datetime.strptime(user_command.update_content_time, '%Y-%m-%d')
 
 #  TODO poprawić i dopisać

@@ -1,13 +1,11 @@
 from commands.abs_command import AbsCommand
 
 
-
-class RemoveExpense(AbsCommand):
-    name = 'Remove expense'
+class Remove(AbsCommand):
+    name = 'Remove'
 
     def execute(self):
         expense_id = input('Provide expense id you want to remove. \n')
-
 
         try:
             expense_id = int(expense_id)
@@ -19,4 +17,3 @@ class RemoveExpense(AbsCommand):
             self.dashboard.remove(expense[0])
         except IndexError:
             print(f"Incorrect value {expense_id}.")
-
