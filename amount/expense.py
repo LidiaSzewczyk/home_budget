@@ -5,12 +5,12 @@ from amount.abs_amount import AbsAmount
 
 class Expense(AbsAmount):
 
-    def __init__(self, name, category, amount, uuid):
-        self._uuid = next(uuid)
-        self._amount = amount
-        self._category = category
-        self._name = name
-        self._created = datetime.now()
+    def __init__(self, db_expense):
+        self._uuid = db_expense[0]
+        self._amount = db_expense[3]
+        self._category = db_expense[1]
+        self._name = db_expense[2]
+        self._created = datetime.strptime(db_expense[4], '%Y-%m-%d %H:%M:%S')
 
     @property
     def name(self):
@@ -50,3 +50,6 @@ class Expense(AbsAmount):
 
     def __repr__(self):
         return f'class Expense (id: {self.uuid}, category:{self.category}, name:{self.name}, amount: {self.amount}, created: {self.created})'
+
+# a =Expense('transport')
+# print(a)

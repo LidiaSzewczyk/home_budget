@@ -5,12 +5,12 @@ from amount.abs_amount import AbsAmount
 
 class Income(AbsAmount):
 
-    def __init__(self, name, category, amount, uuid):
-        self._uuid = next(uuid)
-        self._amount = amount
-        self._category = category
-        self._name = name
-        self._created = datetime.now()
+    def __init__(self, db_income):
+        self._uuid = db_income[0]
+        self._amount = db_income[3]
+        self._category = db_income[1]
+        self._name = db_income[2]
+        self._created = datetime.strptime(db_income[4], '%Y-%m-%d %H:%M:%S')
 
     @property
     def name(self):
