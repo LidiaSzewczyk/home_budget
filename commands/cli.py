@@ -35,3 +35,6 @@ class Cli:
         commands = self.get_commands()
         command = commands.setdefault(user_command, NoCommand)
         return command(user_command)
+
+
+#  TODO not work !!!

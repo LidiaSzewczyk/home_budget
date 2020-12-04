@@ -1,6 +1,8 @@
 from amount.expense import Expense
 from amount.income import Income
 from commands.abs_command import AbsCommand
+from commands.show_expenses import ShowExpenses
+from commands.show_income import ShowIncome
 from dbs.DbConnection import DbConnection
 
 
@@ -9,22 +11,22 @@ class ShowAll(AbsCommand):
 
     def execute(self):
 
-        db = DbConnection().db
-        c = db.cursor()
+        expenses = ShowExpenses()
+        income = ShowIncome()
+        expenses.execute()
+        income.execute()
 
-        c.execute('SELECT * FROM expenses')
-        expenses = c.fetchall()
+        # db = DbConnection().db
+        # c = db.cursor()
+        #
+        # c.execute('SELECT * FROM expenses')
+        # expenses = c.fetchall()
+        #
+        # for amount in expenses:
+        #     print(Expense(amount))
+        #
+        # c.execute('SELECT * FROM income')
+        # income = c.fetchall()
+        # for amount in income:
+        #     print(Income(amount))
 
-        for amount in expenses:
-            expense = Expense(amount)
-            if expense in self.dashboard:
-                self.dashboard.append(expense)
-
-        c.execute('SELECT * FROM income')
-        income = c.fetchall()
-        for amount in income:
-            self.dashboard.append(Income(amount))
-        print(set(self.dashboard))
-        for amount in set(self.dashboard):
-            print(amount)
-# TODO poprawić bo się powtarza

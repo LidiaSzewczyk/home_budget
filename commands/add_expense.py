@@ -11,7 +11,13 @@ class AddExpense(AbsCommand):
     def execute(self):
         expense_category = input('Provide category of expense \n')
         expense_name = input('Provide expense name \n')
+
         expense_amount = input('Provide expense amount\n')
+        try:
+            expense_amount = float(expense_amount)
+        except ValueError:
+            print(f"Incorrect value {expense_amount}.")
+
 
         query = 'INSERT INTO expenses (category, name, amount) VALUES (?, ?, ?)'
         data = (expense_category, expense_name, expense_amount)

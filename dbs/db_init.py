@@ -15,7 +15,6 @@ def db_init():
     c.execute("DROP TABLE IF EXISTS expenses")
     c.execute("DROP TABLE IF EXISTS income")
 
-
     c.execute("""CREATE TABLE expenses (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         category TEXT,
