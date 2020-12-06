@@ -1,5 +1,5 @@
 from datetime import date, timedelta
-from commands.abs_show_expenses import AbsShowExpenses
+from commands.by_time.abs_show_expenses import AbsShowExpenses
 
 
 class ShowExpensesWeek(AbsShowExpenses):

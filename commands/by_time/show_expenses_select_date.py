@@ -1,6 +1,6 @@
 from datetime import datetime, timedelta
 
-from commands.abs_show_expenses import AbsShowExpenses
+from commands.by_time.abs_show_expenses import AbsShowExpenses
 from dbs.DbConnection import DbConnection
 from amount.expense import Expense
 
@@ -9,7 +9,7 @@ class ShowExpensesSelectDates(AbsShowExpenses):
     name = 'Show expenses - select dates'
     Expense = Expense
 
-    def __init__(self):
+    def execute(self):
         self.start_date = input('Provide start date as yyyy-mm-dd\n')
         self.end_date = input('Provide end date as yyyy-mm-dd\n')
 
@@ -34,3 +34,5 @@ class ShowExpensesSelectDates(AbsShowExpenses):
             self.end_date = datetime.strptime(self.end_date, '%Y-%m-%d')
 
         self.end_date = self.end_date + timedelta(days=1)
+
+        super().execute()

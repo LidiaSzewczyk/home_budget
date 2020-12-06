@@ -18,8 +18,11 @@ class ShowExpensesSelectCategory(AbsCommand):
         c.execute(query, data)
         expenses = c.fetchall()
 
-        for amount in expenses:
-            print(Expense(amount))
+        amount = 0
+        for element in expenses:
+            print(Expense(element))
+            amount += Expense(element).amount
+        print(f'*** Sum of expenses: {round(amount, 2)} ***')
 
 
 

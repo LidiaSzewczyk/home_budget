@@ -1,6 +1,6 @@
 from datetime import date
 
-from commands.abs_show_expenses import AbsShowExpenses
+from commands.by_time.abs_show_expenses import AbsShowExpenses
 
 
 class ShowExpensesLastMonth(AbsShowExpenses):
