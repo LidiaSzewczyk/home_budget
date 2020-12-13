@@ -1,5 +1,4 @@
 .idea
 venv
-./test.py
-./budget.db
+./db_store/budget.db
 .ENV
