@@ -1,9 +1,6 @@
-from amount.expense import Expense
-from amount.income import Income
 from commands.abs_command import AbsCommand
-from commands.show_expenses import ShowExpenses
-from commands.show_income import ShowIncome
-from dbs.DbConnection import DbConnection
+from commands.basic_commands.show_expenses import ShowExpenses
+from commands.basic_commands.show_income import ShowIncome
 
 
 class ShowAll(AbsCommand):

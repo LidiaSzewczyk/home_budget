@@ -1,13 +1,10 @@
-import sqlite3
-import os
+from dbs.DbConnection import DbConnection
 
 
 def insert_sample_data():
-    db_name = 'budget.db'
-    db_path = os.path.join(os.path.dirname(__file__), '..', db_name)
 
-    conn = sqlite3.connect(db_path)
-    c = conn.cursor()
+    db = DbConnection().db
+    cursor = db.cursor()
 
     expenses = [
         ("food", "bread", 5),
@@ -17,7 +14,7 @@ def insert_sample_data():
         ("transport", "bus", 3.5)
     ]
 
-    c.executemany("INSERT INTO expenses (category, name, amount) VALUES (?, ?, ?)", expenses)
+    cursor.executemany("INSERT INTO expenses (category, name, amount) VALUES (?, ?, ?)", expenses)
 
     income = [
         ("Anna", "project", 500),
@@ -25,12 +22,12 @@ def insert_sample_data():
         ("Anna", "salary", 3000)
     ]
 
-    c.executemany("INSERT INTO income (category, name, amount) VALUES (?, ?, ?)", income)
+    cursor.executemany("INSERT INTO income (category, name, amount) VALUES (?, ?, ?)", income)
 
-    conn.commit()
-    conn.close()
+    db.commit()
+    db.close()
 
-    print("data added")
+    print("Data has been added.")
 
 
 if __name__ == '__main__':

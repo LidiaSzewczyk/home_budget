@@ -1,19 +1,20 @@
+from abc import ABC
+
 from amount.expense import Expense
-from amount.income import Income
 from commands.abs_command import AbsCommand
 from dbs.DbConnection import DbConnection
 
 
-class ShowExpensesSelectCategory(AbsCommand):
-    name = 'Select expenses by category'
+class AbsShowElements(AbsCommand, ABC):
+    start_date = ''
+    end_date = ''
 
     def execute(self):
-        category = input('Provide category.\n')
-        query ='SELECT * FROM expenses WHERE category=? ORDER BY created DESC'
-        data = (category,)
-
         db = DbConnection().db
         c = db.cursor()
+
+        query = 'SELECT * FROM expenses WHERE created BETWEEN ? AND ? ORDER BY created DESC'
+        data = (self.start_date, self.end_date)
 
         c.execute(query, data)
         expenses = c.fetchall()

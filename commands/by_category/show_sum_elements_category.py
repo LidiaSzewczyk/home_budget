@@ -1,9 +1,7 @@
-from collections import defaultdict, Counter
-
-from amount.expense import Expense
-from amount.income import Income
+from collections import defaultdict
 from commands.abs_command import AbsCommand
 from dbs.DbConnection import DbConnection
+from dbs.commands_to_db.db_select_all import DbSelectAll
 
 
 class ShowSumExpensesCategory(AbsCommand):
@@ -11,11 +9,8 @@ class ShowSumExpensesCategory(AbsCommand):
 
     def execute(self):
 
-        db = DbConnection().db
-        c = db.cursor()
-
-        c.execute('SELECT * FROM expenses ORDER BY category')
-        expenses = c.fetchall()
+        query = 'SELECT * FROM expenses ORDER BY category'
+        expenses = DbSelectAll().do(query)
 
         d = defaultdict(int)
         for idx, category, name, amount, created in expenses:

@@ -3,7 +3,6 @@ import os
 
 
 def db_init():
-
     db_path = os.environ.get("DB_PATH")
     db_name = os.environ.get('DB_NAME')
     db_root = os.environ.get('ROOT_DIR')
@@ -30,8 +29,6 @@ def db_init():
         amount FLOAT,
         created TEXT default (datetime('now', 'localtime'))
     )""")
-
-
 
     conn.commit()
     conn.close()

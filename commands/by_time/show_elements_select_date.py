@@ -1,12 +1,12 @@
 from datetime import datetime, timedelta
 
-from commands.by_time.abs_show_expenses import AbsShowExpenses
+from commands.by_time.abs_show_elements import AbsShowElements
 from dbs.DbConnection import DbConnection
 from amount.expense import Expense
 
 
-class ShowExpensesSelectDates(AbsShowExpenses):
-    name = 'Show expenses - select dates'
+class ShowElementsSelectDates(AbsShowElements):
+    name = 'Show expenses/income - select dates'
     Expense = Expense
 
     def execute(self):
