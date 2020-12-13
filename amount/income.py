@@ -49,4 +49,5 @@ class Income(AbsAmount):
         self._created = new_val
 
     def __repr__(self):
-        return f'class Income (id: {self.uuid}, category:{self.category}, name:{self.name}, amount: {self.amount}, created: {self.created})'
+        return f'class Income (id: {self.uuid}, category: {self.category}, ' \
+               f'name: {self.name}, amount: {self.amount}, created: {self.created})'

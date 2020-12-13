@@ -13,17 +13,3 @@ class ShowAll(AbsCommand):
         expenses.execute()
         income.execute()
 
-        # db = DbConnection().db
-        # c = db.cursor()
-        #
-        # c.execute('SELECT * FROM expenses')
-        # expenses = c.fetchall()
-        #
-        # for amount in expenses:
-        #     print(Expense(amount))
-        #
-        # c.execute('SELECT * FROM income')
-        # income = c.fetchall()
-        # for amount in income:
-        #     print(Income(amount))
-

@@ -1,19 +1,30 @@
+from datetime import date, timedelta
+
 from commands.abs_command import AbsCommand
-from commands.cli import Cli
-from commands.by_time.show_elements_last_month import ShowElementsLastMonth
-from commands.by_time.show_elements_month import ShowElementsMonth
-from commands.by_time.show_elements_select_date import ShowElementsSelectDates
-from commands.by_time.show_elements_today import ShowElementsToday
-from commands.by_time.show_elements_week import ShowElementsWeek
-from commands.by_time.show_elements_year import ShowElementsYear
+from commands.helpers import summary_month
+from dbs.DbConnection import DbConnection
+from dbs.commands_to_db.db_select_one import DbSelectOne
 
 
-class FilterByTime(AbsCommand):
-    name = 'Filter by time'
+class Summary(AbsCommand):
+    name = 'Summary'
 
     def execute(self):
-        commands = (ShowElementsToday, ShowElementsWeek, ShowElementsMonth, ShowElementsLastMonth, ShowElementsYear,
-                    ShowElementsSelectDates)
+        result = []
+        for month in range(2, date.today().month + 1):
+            start_date = date.today().replace(day=1, month=month - 1)
+            end_date = date.today().replace(day=1, month=month)
 
-        filter = Cli(commands)
-        filter.get_user_command()
+            balance = summary_month(start_date, end_date)
+            result.append(balance)
+
+        start_date = date.today().replace(day=1)
+        end_date = date.today() + timedelta(days=1)
+
+        balance = summary_month(start_date, end_date)
+        result.append(balance)
+
+        expenses = sum([x[0] for x in result])
+        income = sum([x[1] for x in result])
+        print(f"This year  expenses: {expenses}; income: {income}; balance: {round(income-expenses, 2)}")
+

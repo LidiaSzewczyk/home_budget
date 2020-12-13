@@ -1,14 +1,16 @@
 from commands.abs_command import AbsCommand
-
-from dbs.DbConnection import DbConnection
+from commands.helpers import select_table, print_elements
 from amount.expense import Expense
+from dbs.commands_to_db.db_select_all import DbSelectAll
+from dbs.commands_to_db.db_select_one import DbSelectOne
 
 
-class ShowExpensesSelectAmount(AbsCommand):
-    name = 'Show expenses - select amounts'
+class ShowElementsSelectAmount(AbsCommand):
+    name = 'Show expenses/income - select amounts'
     Expense = Expense
 
     def execute(self):
+        table = select_table()
 
         min_amount = input('Provide min amount\n')
         max_amount = input('Provide max amount\n')
@@ -17,37 +19,24 @@ class ShowExpensesSelectAmount(AbsCommand):
             min_amount = 0
 
         else:
+            min_amount = min_amount.replace(',', '.')
             min_amount = float(min_amount)
-            print(min_amount)
+
 
         if max_amount == '':
-            max_amount = f'SELECT MAX(amount) FROM expenses '
+            max_amount = f'SELECT MAX(amount) FROM {table[0]}'
 
-            db = DbConnection().db
-            c = db.cursor()
+            element = DbSelectOne().do(max_amount)
 
-            c.execute(max_amount)
-            expense = c.fetchone()
-            max_amount = expense[0]
+            max_amount = element[0]
 
         else:
+            max_amount = max_amount.replace(',', '.')
             max_amount = float(max_amount)
 
-
-
-        query = 'SELECT * FROM expenses WHERE amount BETWEEN ? AND ? ORDER BY amount DESC'
+        query = f'SELECT * FROM {table[0]} WHERE amount BETWEEN ? AND ? ORDER BY amount DESC'
         data = (min_amount, max_amount)
-        db = DbConnection().db
-        c = db.cursor()
-        c.execute(query, data)
-        expenses = c.fetchall()
 
-        amount = 0
-        for element in expenses:
-            print(Expense(element))
-            amount += Expense(element).amount
-        print(f'*** Sum of expenses: {round(amount, 2)} ***')
+        elements = DbSelectAll().do(query, data)
 
-
-
-
+        print_elements(table, elements)

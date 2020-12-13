@@ -1,12 +1,12 @@
 from abc import ABC, abstractmethod
 
-from uuid.uuid import UUID
+# from uuid.uuid import UUID
 
 
 class AbsCommand(ABC):
-    dashboard = []
-
-    uuid = UUID()
+    # dashboard = []
+    #
+    # uuid = UUID()
 
     def __init__(self, *args, **kwargs):
         pass

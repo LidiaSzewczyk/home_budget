@@ -17,19 +17,21 @@ class AddNew(AbsCommand):
 
         try:
             element_amount = float(element_amount)
+            query = f'INSERT INTO {table[0]} (category, name, amount) VALUES (?, ?, ?)'
+            data = (element_category, element_name, element_amount)
+
+            DbCommit().do(query, data)
+
+            query = f'SELECT * FROM {table[0]} WHERE  category=? AND name=? AND amount=? ORDER BY id DESC LIMIT 1'
+            data = (element_category, element_name, element_amount,)
+
+            new_element = DbSelectOne().do(query, data)
+
+            obj = table[1]
+
+            print(obj(new_element))
+
         except ValueError:
             print(f"Incorrect value {element_amount}.")
 
-        query = f'INSERT INTO {table[0]} (category, name, amount) VALUES (?, ?, ?)'
-        data = (element_category, element_name, element_amount)
 
-        DbCommit().do(query, data)
-
-        query = f'SELECT * FROM {table[0]} WHERE  category=? AND name=? AND amount=? ORDER BY id DESC LIMIT 1'
-        data = (element_category, element_name, element_amount,)
-
-        new_element = DbSelectOne().do(query, data)
-
-        obj = table[1]
-
-        print(obj(new_element))

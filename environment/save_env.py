@@ -1,8 +1,11 @@
 import os
 
+from environment.load_envs import find_project_root
+
 
 def save_env(key, val):
-    file_path = os.path.join(".ENV")
+    project_root = find_project_root()
+    file_path = os.path.join(project_root, ".ENV")
     with open(file_path, "r") as file:
         data = file.readlines()
 

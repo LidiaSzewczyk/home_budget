@@ -1,25 +1,18 @@
-from amount.expense import Expense
-from amount.income import Income
 from commands.abs_command import AbsCommand
-from dbs.DbConnection import DbConnection
+from commands.helpers import select_table, print_elements
+from dbs.commands_to_db.db_select_all import DbSelectAll
 
 
-class ShowExpensesAmount(AbsCommand):
-    name = 'Show expenses by amount'
+class ShowElementsAmount(AbsCommand):
+    name = 'Show expenses/income by amount'
 
     def execute(self):
+        table = select_table()
 
-        db = DbConnection().db
-        c = db.cursor()
+        query = f'SELECT * FROM {table[0]} ORDER BY amount DESC'
+        elements = DbSelectAll().do(query)
 
-        c.execute('SELECT * FROM expenses ORDER BY amount DESC')
-        expenses = c.fetchall()
-
-        amount = 0
-        for element in expenses:
-            print(Expense(element))
-            amount += Expense(element).amount
-        print(f'*** Sum of expenses: {round(amount, 2)} ***')
+        print_elements(table, elements)
 
 
 

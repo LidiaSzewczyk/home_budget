@@ -49,7 +49,5 @@ class Expense(AbsAmount):
         self._created = new_val
 
     def __repr__(self):
-        return f'class Expense (id: {self.uuid}, category:{self.category}, name:{self.name}, amount: {self.amount}, created: {self.created})'
-
-# a =Expense('transport')
-# print(a)
+        return f'class Expense (id: {self.uuid}, category: {self.category}, ' \
+               f'name: {self.name}, amount: {self.amount}, created: {self.created})'

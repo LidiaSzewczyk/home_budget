@@ -1,17 +1,14 @@
-from amount.expense import Expense
 from amount.income import Income
 from commands.abs_command import AbsCommand
-from dbs.DbConnection import DbConnection
+from dbs.commands_to_db.db_select_all import DbSelectAll
 
 
 class ShowIncome(AbsCommand):
-    name = 'Show income'
+    name = 'Show all income'
 
     def execute(self):
-        db = DbConnection().db
-        c = db.cursor()
+        query = 'SELECT * FROM income ORDER BY created DESC'
+        income = DbSelectAll().do(query)
 
-        c.execute('SELECT * FROM income ORDER BY created DESC')
-        income = c.fetchall()
         for amount in income:
             print(Income(amount))

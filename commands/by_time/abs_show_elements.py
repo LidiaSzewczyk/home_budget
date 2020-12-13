@@ -1,8 +1,7 @@
 from abc import ABC
-
-from amount.expense import Expense
 from commands.abs_command import AbsCommand
-from dbs.DbConnection import DbConnection
+from commands.helpers import print_elements, select_table
+from dbs.commands_to_db.db_select_all import DbSelectAll
 
 
 class AbsShowElements(AbsCommand, ABC):
@@ -10,20 +9,15 @@ class AbsShowElements(AbsCommand, ABC):
     end_date = ''
 
     def execute(self):
-        db = DbConnection().db
-        c = db.cursor()
+        table = select_table()
 
-        query = 'SELECT * FROM expenses WHERE created BETWEEN ? AND ? ORDER BY created DESC'
+        query = f'SELECT * FROM {table[0]} WHERE created BETWEEN ? AND ? ORDER BY created DESC'
         data = (self.start_date, self.end_date)
 
-        c.execute(query, data)
-        expenses = c.fetchall()
+        elements = DbSelectAll().do(query, data)
+        print_elements(table, elements)
 
-        amount = 0
-        for element in expenses:
-            print(Expense(element))
-            amount += Expense(element).amount
-        print(f'*** Sum of expenses: {round(amount, 2)} ***')
+
 
 
 

@@ -1,39 +1,40 @@
 import math
 from datetime import datetime
-from amount.expense import Expense
 from commands.abs_command import AbsCommand
-from commands.users_commands import UsersCommands
-from dbs.DbConnection import DbConnection
+
+from dbs.commands_to_db.db_select_one import DbSelectOne
+from dbs.commands_to_db.db_commit import DbCommit
+from commands.helpers import select_table
 
 
-class UpdateExpense(AbsCommand):
-    name = 'Update expense'
-    Expense = Expense
+class Update(AbsCommand):
+    name = 'Update'
 
     def execute(self):
 
-        expense_id = input('Provide id of the expense you want modify.\n')
+        table = select_table()
+
+        element_id = input('Provide id of the expense you want modify.\n')
 
         try:
-            expense_id = int(expense_id)
+            element_id = int(element_id)
 
-            query = f'SELECT * FROM expenses WHERE  id=?'
-            data = (expense_id,)
+            query = f'SELECT * FROM {table[0]} WHERE  id=?'
+            data = (element_id,)
 
-            db = DbConnection().db
-            c = db.cursor()
+            element = DbSelectOne().do(query, data)
 
-            c.execute(query, data)
-            expense = c.fetchone()
-            print(self.Expense(expense))
+            obj = table[1]
+            print(obj(element))
 
         except ValueError:
-            print(f"Incorrect value {expense_id}.")
+            print(f"Incorrect value {element_id}.")
         except TypeError:
-            print(f"Incorrect value, no id {expense_id}.")
+            print(f"Incorrect value, no id {element_id}.")
         else:
             update_category = input(
-                'Select the appropriate number if you want to change:\n category - 1\n name - 2\n amount - 3\n date of creation - 4\n')
+                'Select the appropriate number if you want to change:\n '
+                'category - 1\n name - 2\n amount - 3\n date of creation - 4\n')
 
             try:
                 update_category = int(math.fabs(int(update_category)))
@@ -61,14 +62,11 @@ class UpdateExpense(AbsCommand):
                     created = datetime.strptime(created, '%Y-%m-%d')
                     values = f'created="{created}"'
 
-                query = f'UPDATE expenses SET {values} WHERE id={expense_id}'
-                c.execute(query)
-                db.commit()
-                query = f'SELECT * FROM expenses WHERE  id=?'
-                db = DbConnection().db
-                c = db.cursor()
-                c.execute(query, data)
-                updated_expense = c.fetchone()
-                print(self.Expense(updated_expense))
+                query = f'UPDATE {table[0]} SET {values} WHERE id={element_id}'
+                DbCommit().do(query)
 
-# TODO ulepszyć
+                query = f'SELECT * FROM {table[0]} WHERE  id=?'
+                updated_element = DbSelectOne().do(query, data)
+                print(obj(updated_element))
+
+
