@@ -4,16 +4,16 @@ from dbs.commands_to_db.db_select_one import DbSelectOne
 
 
 def select_table():
-    table = int(input('1. Expenses \n 2. Income \n  Choose command.\n'))
+    table = input('1. Expenses \n 2. Income \n  Choose command.\n')
 
-    if table == 1:
+    if table.strip() == '1':
         obj = Expense
         return 'expenses', obj
-    elif table == 2:
+    elif table.strip() == '2':
         obj = Income
         return 'income', obj
     else:
-        print("Wrong number.")
+        print("Wrong choice. Try again.")
         select_table()
 
 
