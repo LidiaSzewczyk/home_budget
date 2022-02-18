@@ -1,4 +1,4 @@
 .idea
 venv
-./db_store/budget.db
+*.db
 .ENV
